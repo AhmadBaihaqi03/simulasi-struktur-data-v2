@@ -118,7 +118,7 @@
         <div class="card card-custom p-3 p-md-4">
             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2 mb-3">
                 <h5 class="fw-bold mb-0 text-dark" style="font-size: 1rem;">
-                    <i class="bi bi-people-fill text-indigo me-2"></i>Daftar Kelompok Mahasiswa
+                    <i class="bi bi-people-fill text-indigo me-2"></i>Daftar Kelompok Siswa
                 </h5>
                 <span class="badge bg-opacity-10 text-indigo px-3 py-2 rounded-pill fw-bold" style="font-size: 0.85rem; background-color: #eef0ff;">
                     {{ $groups->count() }} Kelompok Terdaftar
@@ -153,7 +153,7 @@
                                     <small class="text-muted">ID: #{{ str_pad($group->id, 4, '0', STR_PAD_LEFT) }}</small>
                                 </td>
                                 <td class="border-0">
-                                    @if($group->evaluation)
+                                    @if($group->evaluation && !empty($group->evaluation->feedback_comment))
                                         <div class="d-flex align-items-center fw-bold" style="color: #10b981; font-size: 0.85rem;">
                                             <i class="bi bi-check-circle-fill me-1"></i>
                                             <span>Sudah Feedback</span>

@@ -24,7 +24,7 @@
                         Mulailah Perjalanan <br> <span class="text-indigo-600">Edukasi Digital</span> Anda.
                     </h2>
                     <p class="text-lg text-slate-500 leading-relaxed max-w-md">
-                        Daftarkan akun instruktur Anda untuk mengakses modul lengkap, membuat sesi kelas, dan membantu siswa memahami struktur data dengan lebih mudah.
+                        Daftarkan akun Anda untuk membuat sesi pembelajaran dan memberikan umpan balik kepada siswa.
                     </p>
                 </div>
             </div>
@@ -32,7 +32,7 @@
             <div class="w-full max-w-md mx-auto bg-white border border-indigo-50 rounded-[2.5rem] p-10 shadow-[0_25px_70px_rgba(79,70,229,0.07)]">
                 <div class="mb-10 text-center lg:text-left">
                     <h2 class="text-2xl font-bold text-slate-900">Daftar Akun Baru</h2>
-                    <p class="text-sm text-slate-500 mt-2 font-medium">Bergabung sebagai Pengelola Sesi</p>
+                    <p class="text-sm text-slate-500 mt-2 font-medium">Bergabung sebagai Guru</p>
                 </div>
 
                 <form method="POST" action="{{ route('register') }}" class="space-y-5">

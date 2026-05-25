@@ -68,17 +68,19 @@
 
     <div class="container py-4 py-md-5">
         @if(session('success'))
-            <div x-data="{ show: true }"
-                 x-show="show"
-                 x-init="setTimeout(() => show = false, 3000)"
-                 x-transition:leave="transition ease-in duration-500"
-                 x-transition:leave-start="opacity-100"
-                 x-transition:leave-end="opacity-0"
-                 class="alert border-0 shadow-sm mb-4 d-flex align-items-center gap-3"
-                 style="border-radius: 15px; background-color: #eef0ff; border-left: 4px solid #5c60f5; color: #4c2a85;">
+            <div id="successAlert" 
+                class="alert border-0 shadow-sm mb-4 d-flex align-items-center gap-3 fade show"
+                style="border-radius: 15px; background-color: #eef0ff; border-left: 4px solid #5c60f5; color: #4c2a85; position: relative; transition: opacity 0.5s ease;">
+                
                 <i class="bi bi-check-circle-fill" style="color: #5c60f5; font-size: 1.2rem;"></i>
                 <span style="font-weight: 600; flex: 1;">{{ session('success') }}</span>
-                <button type="button" class="btn-close" @click="show = false" aria-label="Close" style="opacity: 0.7;"></button>
+                
+                <button type="button" 
+                        class="btn-close" 
+                        onclick="closeAlert()" 
+                        style="opacity: 0.7; cursor: pointer; z-index: 10;" 
+                        aria-label="Close">
+                </button>
             </div>
         @endif
 
@@ -182,14 +184,13 @@
                             <tr>
                                 <td>
                                     <div class="fw-bold text-dark session-title" style="font-size: 0.9rem;">{{ $session->title }}</div>
-                                    <small class="text-muted">{{ $session->created_at->format('d M Y') }}</small>
                                 </td>
                                 <td>
                                     <span class="badge bg-light text-dark border px-2 py-1 font-monospace session-code" style="font-size: 0.75rem;">{{ $session->session_code }}</span>
                                 </td>
                                 <td class="d-none d-sm-table-cell">
                                     <span class="text-muted small">
-                                        <i class="bi bi-people me-1"></i> {{ $session->groups_count ?? $session->groups->count() }} Kelompok
+                                        <i class="bi bi-people me-1"></i> {{ $session->total_submitted_groups }} Kelompok
                                     </span>
                                 </td>
                                 <td>
@@ -210,9 +211,10 @@
 
                                         <a href="{{ route('sessions.evaluations', $session) }}" class="btn btn-sm btn-action-custom btn-outline-indigo position-relative shadow-sm" title="Grading">
                                             <i class="bi bi-mortarboard-fill fs-5"></i>
-                                            @if($session->pending_evaluations_count > 0)
+                                            
+                                            @if($session->real_pending_count > 0)
                                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light" style="font-size: 0.65rem;">
-                                                    {{ $session->pending_evaluations_count }}
+                                                    {{ $session->real_pending_count }}
                                                 </span>
                                             @endif
                                         </a>
@@ -267,5 +269,21 @@
                 }
             });
         });
+
+        // untuk alert sukses yang muncul di atas, dengan tombol close dan auto-hide setelah 4 detik
+        function closeAlert() {
+            let alertEl = document.getElementById('successAlert');
+            if (alertEl) {
+                alertEl.style.opacity = '0'; // Efek fade out
+                setTimeout(() => {
+                    alertEl.remove(); // Hapus dari DOM setelah fade out selesai
+                }, 500);
+            }
+        }
+
+        // Fungsi otomatis hilang dalam 4 detik
+        setTimeout(() => {
+            closeAlert();
+        }, 4000);
     </script>
 </x-app-layout>

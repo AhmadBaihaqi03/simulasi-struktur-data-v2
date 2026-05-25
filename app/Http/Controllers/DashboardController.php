@@ -16,49 +16,61 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // 1. Ambil data sesi untuk tabel
-        // withCount akan otomatis membuat atribut: groups_count & pending_evaluations_count
+        // 1. Ambil data sesi untuk tabel (Perbaikan hitungan pending pada icon topi)
         $sessions = Session::where('user_id', $user->id)
         ->withCount([
-            'groups' => function($query) {
+            // Menghitung total kelompok yang sudah submit untuk kolom 'MURID'
+            'groups as total_submitted_groups' => function($query) {
                 $query->where('is_submitted', true);
             }, 
-            // Menghitung grup yang sudah submit tapi belum ada di tabel evaluations
-            'groups as pending_evaluations_count' => function($query) {
+            // Menggunakan alias baru khusus untuk angka di icon topi sarjana
+            'groups as real_pending_count' => function($query) {
                 $query->where('is_submitted', true)
-                      ->whereDoesntHave('evaluation');
+                      ->where(function($q) {
+                          $q->whereDoesntHave('evaluation')
+                            ->orWhereHas('evaluation', function($subQ) {
+                                $subQ->whereNull('feedback_comment')
+                                     ->orWhere('feedback_comment', '');
+                            });
+                      });
             }
         ])
         ->latest()
         ->paginate(10);
 
-        // 2. Hitung statistik untuk 6 Card Utama
+        // 2. Hitung statistik untuk 6 Card Utama (Perbaikan hitungan pending & graded)
         $stats = [
-        // Statistik Sesi
-        'total'        => Session::where('user_id', $user->id)->count(),
-        'active'       => Session::where('user_id', $user->id)->where('is_active', true)->count(),
-        
-        // Statistik Grup (Global) - Update: Hanya menghitung yang sudah submit
-        'total_groups' => StudentGroup::whereHas('session', function($q) use ($user) {
-                            $q->where('user_id', $user->id);
-                         })
-                         ->where('is_submitted', true) // Tambahan filter
-                         ->count(),
+            'total'        => Session::where('user_id', $user->id)->count(),
+            'active'       => Session::where('user_id', $user->id)->where('is_active', true)->count(),
+            
+            'total_groups' => StudentGroup::whereHas('session', function($q) use ($user) {
+                                $q->where('user_id', $user->id);
+                             })
+                             ->where('is_submitted', true)
+                             ->count(),
 
-        // Total grup yang butuh dinilai (Global)
-        'pending'      => StudentGroup::whereHas('session', function($q) use ($user) {
-                            $q->where('user_id', $user->id);
-                         })
-                         ->where('is_submitted', true)
-                         ->whereDoesntHave('evaluation')
-                         ->count(),
+            'pending'      => StudentGroup::whereHas('session', function($q) use ($user) {
+                                $q->where('user_id', $user->id);
+                             })
+                             ->where('is_submitted', true)
+                             ->where(function($query) {
+                                 $query->whereDoesntHave('evaluation')
+                                       ->orWhereHas('evaluation', function($q) {
+                                           $q->whereNull('feedback_comment')
+                                             ->orWhere('feedback_comment', '');
+                                       });
+                             })
+                             ->count(),
 
-        // Total grup yang sudah selesai dinilai (Global)
-        'graded'       => StudentGroup::whereHas('session', function($q) use ($user) {
-                            $q->where('user_id', $user->id);
-                         })
-                         ->whereHas('evaluation')
-                         ->count(),
+            'graded'       => StudentGroup::whereHas('session', function($q) use ($user) {
+                                $q->where('user_id', $user->id);
+                             })
+                             ->where('is_submitted', true)
+                             ->whereHas('evaluation', function($query) {
+                                 $query->whereNotNull('feedback_comment')
+                                       ->where('feedback_comment', '!=', '');
+                             })
+                             ->count(),
         ];
 
         return view('dashboard', compact('sessions', 'stats'));

@@ -24,7 +24,7 @@
                         Pantau Progres <br> <span class="text-indigo-600">Logika Siswa</span> Anda.
                     </h2>
                     <p class="text-lg text-slate-500 leading-relaxed max-w-md">
-                        Masuk sebagai instruktur untuk mengelola sesi belajar, memantau visualisasi data secara real-time, dan memberikan tantangan algoritma.
+                        Masuk sebagai guru untuk mengelola sesi belajar, dan memberikan umpan balik kepada siswa.
                     </p>
                 </div>
             </div>
@@ -77,7 +77,7 @@
                 <div class="mt-10 text-center pt-8 border-t border-slate-50">
                     <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
                         Belum punya akun?
-                        <a href="{{ route('register') }}" class="text-indigo-600 hover:underline ml-1">Daftar Guru</a>
+                        <a href="{{ route('register') }}" class="text-indigo-600 hover:underline ml-1">Daftar</a>
                     </p>
                 </div>
             </div>

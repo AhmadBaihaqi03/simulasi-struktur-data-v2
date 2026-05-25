@@ -113,7 +113,7 @@
                 </div>
 
                 <div class="flex items-center gap-3 w-full">
-                    <a href="{{ asset('dokumen/PanduanPenggunaan.pdf') }}" target="_blank" 
+                    <a href="{{ asset('dokumen/panduan.pdf') }}" target="_blank" 
                        class="flex-1 text-center py-3 bg-white text-indigo-700 rounded-2xl font-extrabold text-[10px] sm:text-[11px] tracking-widest border border-indigo-100 shadow-sm hover:bg-indigo-600 hover:text-white hover:shadow-indigo-200 transition-all min-h-[44px] flex items-center justify-center">
                         BUKA PANDUAN LENGKAP UNTUK GURU DAN SISWA
                     </a>

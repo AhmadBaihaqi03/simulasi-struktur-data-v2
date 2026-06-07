@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('evaluations', function (Blueprint $table) {
+        Schema::create('group_evaluations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_group_id')->constrained('student_groups')->onDelete('cascade');
+            $table->foreignId('group_answer_id')->constrained('group_answers')->onDelete('cascade');
             $table->text('feedback_comment')->nullable();
             $table->timestamps();
         });
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('evaluations');
+        Schema::dropIfExists('group_evaluations');
     }
 };

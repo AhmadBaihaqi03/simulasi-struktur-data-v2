@@ -74,27 +74,61 @@
                 Pilih materi di bawah atau bergabung ke sesi belajar aktif untuk menyelesaikan tantangan dari guru
             </p>
 
-            {{-- Form Join Sesi --}}
-            <form action="{{ route('student.join.check') }}" method="POST" class="w-full max-w-lg mx-auto bg-white p-2 rounded-3xl shadow-2xl shadow-indigo-100/50 border border-indigo-50">
-                @csrf
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                    <div class="flex items-center gap-3 pl-4 flex-1">
-                        <svg class="w-5 h-5 text-slate-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
-                        </svg>
-                        <input type="text" name="session_code" placeholder="Masukkan Kode Sesi" 
-                               class="w-full py-3 text-sm font-semibold outline-none text-slate-700 bg-transparent" 
-                               required oninput="this.value = this.value.toUpperCase()">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-5xl mx-auto">
+                {{-- Form Join Sesi Kelompok --}}
+                <form action="{{ route('student.join.check') }}" method="POST" class="bg-white p-3 rounded-3xl shadow-2xl shadow-indigo-100/50 border border-indigo-50">
+                    @csrf
+                    <div class="mb-3 text-left">
+                        <span class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em]">Sesi Kelompok</span>
+                        <h3 class="text-lg font-extrabold text-slate-900 mt-1">Masukkan Kode Sesi Kelompok</h3>
                     </div>
-                    <button type="submit" class="btn-gradient px-6 sm:px-8 py-3.5 text-white rounded-2xl text-xs font-bold flex items-center justify-center gap-2 hover:opacity-95 transition shadow-lg shadow-indigo-200 min-h-[44px]">
-                        Mulai Belajar <span class="text-[10px]">▶</span>
-                    </button>
-                </div>
-            </form>
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                        <div class="flex items-center gap-3 pl-4 flex-1 bg-slate-50 rounded-2xl border border-slate-100">
+                            <svg class="w-5 h-5 text-slate-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+                            </svg>
+                            <input type="text" name="session_code" placeholder="Kode Sesi Kelompok" 
+                                   class="w-full py-3 text-sm font-semibold outline-none text-slate-700 bg-transparent" 
+                                   required oninput="this.value = this.value.toUpperCase()">
+                        </div>
+                        <button type="submit" class="btn-gradient px-6 sm:px-8 py-3.5 text-white rounded-2xl text-xs font-bold flex items-center justify-center gap-2 hover:opacity-95 transition shadow-lg shadow-indigo-200 min-h-[44px]">
+                            Masuk <span class="text-[10px]">▶</span>
+                        </button>
+                    </div>
+                </form>
+
+                {{-- Form Join Sesi Individu --}}
+                <form action="{{ route('student.individual.check') }}" method="POST" class="bg-white p-3 rounded-3xl shadow-2xl shadow-indigo-100/50 border border-indigo-50">
+                    @csrf
+                    <div class="mb-3 text-left">
+                        <span class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em]">Sesi Individu</span>
+                        <h3 class="text-lg font-extrabold text-slate-900 mt-1">Masukkan Kode Sesi Individu</h3>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                        <div class="flex items-center gap-3 pl-4 flex-1 bg-slate-50 rounded-2xl border border-slate-100">
+                            <svg class="w-5 h-5 text-slate-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0-1.657 1.343-3 3-3s3 1.343 3 3-1.343 3-3 3-3-1.343-3-3z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 21v-2a4 4 0 014-4h2"></path>
+                            </svg>
+                            <input type="text" name="session_code" placeholder="Kode Sesi Individu" 
+                                   class="w-full py-3 text-sm font-semibold outline-none text-slate-700 bg-transparent" 
+                                   required oninput="this.value = this.value.toUpperCase()">
+                        </div>
+                        <button type="submit" class="btn-gradient px-6 sm:px-8 py-3.5 text-white rounded-2xl text-xs font-bold flex items-center justify-center gap-2 hover:opacity-95 transition shadow-lg shadow-indigo-200 min-h-[44px]">
+                            Mulai Kuis <span class="text-[10px]">▶</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
 
             @if(session('error'))
                 <div class="text-red-500 text-xs font-bold mt-2 animate-pulse">
                     ⚠️ {{ session('error') }}
+                </div>
+            @endif
+            @if(session('individual_error'))
+                <div class="text-red-500 text-xs font-bold mt-2 animate-pulse">
+                    ⚠️ {{ session('individual_error') }}
                 </div>
             @endif
         </section>

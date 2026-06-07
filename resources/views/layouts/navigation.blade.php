@@ -303,10 +303,15 @@
                     </span>
                 </div>
 
+               
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <a href="{{ route('dashboard.individu') }}"
+                    class="inline-flex items-center px-1 pt-1 text-sm font-bold no-underline transition-colors {{ request()->routeIs('dashboard.individu') ? 'nav-link-active' : 'text-slate-400 hover:text-slate-600' }}">
+                        {{ __('Sesi Individu') }}
+                    </a>
                     <a href="{{ route('dashboard') }}"
                        class="inline-flex items-center px-1 pt-1 text-sm font-bold no-underline transition-colors {{ request()->routeIs('dashboard') ? 'nav-link-active' : 'text-slate-400 hover:text-slate-600' }}">
-                        {{ __('Dashboard') }}
+                        {{ __('Sesi Kelompok') }}
                     </a>
                 </div>
             </div>

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pbl_sessions', function (Blueprint $table) { 
+        Schema::create('pbl_group_sessions', function (Blueprint $table) { 
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('session_code')->unique();
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pbl_sessions');
+        Schema::dropIfExists('pbl_group_sessions');
     }
 };

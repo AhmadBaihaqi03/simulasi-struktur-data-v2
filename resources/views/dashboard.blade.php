@@ -180,7 +180,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($sessions as $session)
+                            @forelse($pblgroupsessions as $session)
                             <tr>
                                 <td>
                                     <div class="fw-bold text-dark session-title" style="font-size: 0.9rem;">{{ $session->title }}</div>
@@ -243,10 +243,10 @@
 
                 <div class="mt-4 pagination-wrapper d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 px-1">
                     <div class="text-muted small">
-                        Showing {{ $sessions->firstItem() ?? 0 }} to {{ $sessions->lastItem() ?? 0 }} of {{ $sessions->total() }} entries
+                        Showing {{ $pblgroupsessions->firstItem() ?? 0 }} to {{ $pblgroupsessions->lastItem() ?? 0 }} of {{ $pblgroupsessions->total() }} entries
                     </div>
                     <div>
-                        {{ $sessions->links() }}
+                        {{ $pblgroupsessions->links() }}
                     </div>
                 </div>
             </div>

@@ -28,12 +28,14 @@
                         <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3 text-center">Feedback Guru</label>
                         <div class="relative p-4 sm:p-6 bg-slate-50 rounded-3xl border border-slate-100 min-h-[100px] sm:min-h-[120px]">
                             <i data-lucide="quote" class="absolute top-3 right-3 sm:top-4 sm:right-4 w-6 h-6 sm:w-8 sm:h-8 text-indigo-100"></i>
-                            @if($group->evaluation && $group->evaluation->feedback_comment)
+                            @if($group->groupEvaluation?->feedback_comment)
                                 <p class="text-sm text-slate-700 leading-relaxed relative z-10 font-medium italic">
-                                    {{ $group->evaluation->feedback_comment }}
+                                    {{ $group->groupEvaluation->feedback_comment }}
                                 </p>
                             @else
-                                <p class="text-[11px] text-slate-400 italic text-center mt-3 sm:mt-4 uppercase font-bold tracking-wider">Belum ada feedback.</p>
+                                <p class="text-[11px] text-slate-400 italic text-center mt-3 sm:mt-4 uppercase font-bold tracking-wider">
+                                    Belum ada feedback.
+                                </p>
                             @endif
                         </div>
                     </div>

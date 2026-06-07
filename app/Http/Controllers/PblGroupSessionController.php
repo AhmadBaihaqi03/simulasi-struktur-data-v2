@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PblGroupSession;
 use Illuminate\Http\Request;
-use App\Models\Session;
 use Illuminate\Support\Str;
 
-class SessionController extends Controller
+class PblGroupSessionController extends Controller
 {
     public function create()
     {
@@ -22,7 +22,7 @@ class SessionController extends Controller
             'f1_learning_objectives' => 'nullable|array',
         ]);
 
-        $request->user()->sessions()->create([ 
+        $request->user()->pblGroupSessions()->create([ 
             'session_code'   => strtoupper(Str::random(6)),
             'title'          => $request->title,
             'f1_context'     => $request->f1_context,
@@ -37,7 +37,7 @@ class SessionController extends Controller
         return redirect()->route('dashboard')->with('success', 'Sesi berhasil dibuat!');
     }
 
-    public function edit(Session $session)
+    public function edit(PblGroupSession $session)
     {
         // Proteksi: Pastikan hanya pemilik yang bisa edit
         // if ($session->user_id !== auth()->id()) { abort(403); } -> sementara baris yang seperti ini aku komen dulu
@@ -45,7 +45,7 @@ class SessionController extends Controller
         return view('sessions.edit', compact('session'));
     }
 
-    public function update(Request $request, Session $session)
+    public function update(Request $request, PblGroupSession $session)
     {
         //if ($session->user_id !== auth()->id()) { abort(403); } -> sementara baris yang seperti ini aku komen dulu
 
@@ -61,7 +61,7 @@ class SessionController extends Controller
         return redirect()->route('dashboard')->with('success', 'Sesi diperbarui!');
     }
 
-    public function toggle(Session $session)
+    public function toggle(PblGroupSession $session)
     {
         //if ($session->user_id !== auth()->id()) { abort(403); } -> sementara baris yang seperti ini aku komen dulu
 
@@ -71,7 +71,7 @@ class SessionController extends Controller
         return back()->with('success', "Sesi berhasil $status!");
     }
 
-    public function destroy(Session $session)
+    public function destroy(PblGroupSession $session)
     {
         //if ($session->user_id !== auth()->id()) { abort(403); } -> sementara baris yang seperti ini aku komen dulu
 
@@ -80,10 +80,10 @@ class SessionController extends Controller
     }
 
 
-    public function evaluations(Session $session)
+    public function evaluations(PblGroupSession $session)
     {
         // Cukup ambil yang is_submitted saja
-        $groups = $session->groups()
+        $groups = $session->groupAnswers()
                         ->where('is_submitted', true)
                         ->get();
 

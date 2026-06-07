@@ -338,8 +338,8 @@
                         <div class="mt-2">
                             <label class="label-mini d-block mb-2">Tulis Umpan Balik Anda</label>
                             @php
-                                $hasFeedback = $group->evaluation && $group->evaluation->feedback_comment;
-                                $feedbackContent = $hasFeedback ? $group->evaluation->feedback_comment : '';
+                                $hasFeedback = $group->GroupEvaluation && $group->GroupEvaluation->feedback_comment;
+                                $feedbackContent = $hasFeedback ? $group->GroupEvaluation->feedback_comment : '';
                             @endphp
                             @if($hasFeedback)
                                 <div class="alert alert-info d-flex align-items-center mb-2" style="border-radius: 12px; border-left: 4px solid #0dcaf0; background: #cfe2ff; color: #084298; font-size: 0.85rem; padding: 0.6rem 0.8rem;">
@@ -366,8 +366,8 @@
                         <div class="mb-4">
                             <label class="label-mini d-block mb-2">Umpan Balik</label>
                             @php
-                                $hasFeedback = $group->evaluation && $group->evaluation->feedback_comment;
-                                $feedbackContent = $hasFeedback ? $group->evaluation->feedback_comment : '';
+                                $hasFeedback = $group->GroupEvaluation && $group->GroupEvaluation->feedback_comment;
+                                $feedbackContent = $hasFeedback ? $group->GroupEvaluation->feedback_comment : '';
                             @endphp
                             @if($hasFeedback)
                                 <div class="alert alert-info d-flex align-items-center mb-2" style="border-radius: 12px; border-left: 4px solid #0dcaf0; background: #cfe2ff; color: #084298; font-size: 0.9rem; padding: 0.75rem 1rem;">

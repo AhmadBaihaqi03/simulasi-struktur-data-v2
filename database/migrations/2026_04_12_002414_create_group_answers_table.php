@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('student_groups', function (Blueprint $table) {
+        Schema::create('group_answers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('session_id')->constrained('pbl_sessions')->onDelete('cascade');
+            $table->foreignId('pbl_group_session_id')->constrained('pbl_group_sessions')->onDelete('cascade');
             $table->string('group_name');
             $table->json('student_data');
             $table->string('class_name')->nullable();       
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('student_groups');
+        Schema::dropIfExists('group_answers');
     }
 };

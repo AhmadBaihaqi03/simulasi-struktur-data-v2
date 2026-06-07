@@ -153,7 +153,7 @@
                                     <small class="text-muted">ID: #{{ str_pad($group->id, 4, '0', STR_PAD_LEFT) }}</small>
                                 </td>
                                 <td class="border-0">
-                                    @if($group->evaluation && !empty($group->evaluation->feedback_comment))
+                                    @if($group->groupEvaluation && !empty($group->groupEvaluation->feedback_comment))
                                         <div class="d-flex align-items-center fw-bold" style="color: #10b981; font-size: 0.85rem;">
                                             <i class="bi bi-check-circle-fill me-1"></i>
                                             <span>Sudah Feedback</span>

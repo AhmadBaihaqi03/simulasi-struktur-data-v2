@@ -20,7 +20,7 @@
                         <h6 class="text-[11px] font-black text-slate-900 tracking-[0.2em] uppercase mb-2">Ringkasan Nilai</h6>
                     </div>
 
-                    <div class="mt-6 grid grid-cols-2 gap-3">
+                    <div class="mt-6 grid grid-cols-1 gap-3">
                         <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 text-center">
                             <div class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Skor Total</div>
                             <div class="text-3xl font-black text-indigo-600">{{ $submission->total_score }}</div>

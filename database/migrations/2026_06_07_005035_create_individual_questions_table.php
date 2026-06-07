@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('individual_questions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('individual_session_id')->constrained('individual_sessions')->onDelete('cascade');
-            $table->enum('type', ['multiple_choice', 'drag_drop', 'checkbox']);
+            $table->enum('type', ['multiple_choice', 'drag_drop', 'checkbox', 'grouping']);
             $table->text('question_text');
             $table->json('options');
             $table->json('correct_answer');

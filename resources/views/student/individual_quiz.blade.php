@@ -78,11 +78,17 @@
                                 @endforeach
                             </div>
                         @elseif($question->type === 'drag_drop')
+                            @php
+                                $dragOptions = is_array($question->options) ? $question->options : [];
+                                $shuffledDragOptions = $dragOptions;
+                                shuffle($shuffledDragOptions);
+                            @endphp
+
                             <div class="space-y-3">
                                 <label class="block text-[11px] font-black text-indigo-500 uppercase tracking-[0.2em] mb-2">Susun urutan jawaban</label>
                                 <div class="drag-drop-container" data-question-id="{{ $question->id }}">
                                     <ul class="dd-list space-y-2">
-                                        @foreach($question->options ?? [] as $option)
+                                        @foreach($shuffledDragOptions as $option)
                                             <li class="dd-item flex items-center gap-3 p-3 bg-white rounded-2xl border border-slate-200" draggable="true">
                                                 <div class="flex gap-2 items-center">
                                                     <button type="button" class="btn-up px-2 py-1 text-xs bg-slate-100 rounded">↑</button>
@@ -100,34 +106,37 @@
                             @php
                                 $groupNames = is_array($question->options) ? $question->options : [];
                                 $groupItems = is_array($question->correct_answer) ? $question->correct_answer : [];
+                                $shuffledGroupItems = $groupItems;
+                                shuffle($shuffledGroupItems);
                             @endphp
 
                             <div class="space-y-4 grouping-container" data-question-id="{{ $question->id }}">
+                                <div class="p-3 bg-white rounded-2xl border border-slate-200">
+                                    <div class="flex items-center justify-between gap-3 mb-3">
+                                        <div>
+                                            <h4 class="font-bold text-slate-700">Bank Item</h4>
+                                            <p class="text-xs text-slate-500">Semua opsi jawaban ada di sini dulu, lalu seret ke kelompok yang sesuai.</p>
+                                        </div>
+                                    </div>
+                                    <div class="group-dropzone min-h-[100px] flex flex-wrap gap-2" data-zone="bank">
+                                        @foreach($shuffledGroupItems as $itemRow)
+                                            <div class="group-item px-3 py-2 bg-slate-50 rounded-xl border border-slate-200 cursor-move" draggable="true" data-item="{{ $itemRow['item'] }}">
+                                                {{ $itemRow['item'] }}
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
                                 <div class="grid grid-cols-1 md:grid-cols-{{ max(1, count($groupNames)) }} gap-4">
                                     @foreach($groupNames as $groupName)
                                         <div class="group-column p-3 bg-white rounded-2xl border border-slate-200" data-group-name="{{ $groupName }}">
                                             <h4 class="font-bold text-slate-700">{{ $groupName }}</h4>
-                                            <div class="group-dropzone min-h-[80px] mt-3">
-                                                @foreach($groupItems as $itemRow)
-                                                    @if(isset($itemRow['group']) && $itemRow['group'] === $groupName)
-                                                        <div class="group-item p-2 mt-2 bg-slate-50 rounded" draggable="true" data-item="{{ $itemRow['item'] }}">{{ $itemRow['item'] }}</div>
-                                                    @endif
-                                                @endforeach
-                                            </div>
+                                            <div class="group-dropzone min-h-[100px] mt-3 p-2 rounded-xl bg-slate-50" data-zone="{{ $groupName }}"></div>
                                         </div>
                                     @endforeach
                                 </div>
 
-                                <div class="ungrouped mt-4 p-3 bg-white rounded-2xl border border-slate-200">
-                                    <h4 class="font-bold text-slate-700">Belum dikelompokkan</h4>
-                                    <div class="group-dropzone min-h-[80px] mt-3">
-                                        @foreach($groupItems as $itemRow)
-                                            @if(empty($itemRow['group']))
-                                                <div class="group-item p-2 mt-2 bg-slate-50 rounded" draggable="true" data-item="{{ $itemRow['item'] }}">{{ $itemRow['item'] }}</div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
+                                <div class="text-xs text-slate-500">Item yang belum cocok bisa tetap di Bank Item.</div>
 
                                 <div class="hidden-inputs"></div>
                             </div>
@@ -216,7 +225,6 @@
                         if (!hiddenWrap) return;
                         hiddenWrap.innerHTML = '';
 
-                        // iterate group columns
                         container.querySelectorAll('.group-column').forEach(col => {
                             const groupName = col.dataset.groupName || '';
                             col.querySelectorAll('.group-item').forEach(itemEl => {
@@ -228,15 +236,14 @@
                             });
                         });
 
-                        // ungrouped zone
-                        const ungrouped = container.querySelector('.ungrouped .group-dropzone');
-                        if (ungrouped) {
-                            ungrouped.querySelectorAll('.group-item').forEach(itemEl => {
+                        const bankZone = container.querySelector('.group-dropzone[data-zone="bank"]');
+                        if (bankZone) {
+                            bankZone.querySelectorAll('.group-item').forEach(itemEl => {
                                 const value = itemEl.dataset.item || itemEl.textContent.trim();
                                 const hi = document.createElement('input');
                                 hi.type = 'hidden'; hi.name = `answers[${qid}][item][]`; hi.value = value; hiddenWrap.appendChild(hi);
                                 const hg = document.createElement('input');
-                                hg.type = 'hidden'; hg.name = `answers[${qid}][group][]`; hg.value = '' ; hiddenWrap.appendChild(hg);
+                                hg.type = 'hidden'; hg.name = `answers[${qid}][group][]`; hg.value = ''; hiddenWrap.appendChild(hg);
                             });
                         }
                     });

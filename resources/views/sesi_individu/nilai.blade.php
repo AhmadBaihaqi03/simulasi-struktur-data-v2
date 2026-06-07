@@ -10,8 +10,7 @@
     <div class="container py-4 py-md-5">
         <div class="mb-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
             <div>
-                <div class="text-uppercase small fw-bold text-muted">Sesi Individu</div>
-                <h1 class="fw-bold mb-1">{{ $session->title }}</h1>
+                <h1 class="fw-bold mb-1">Sesi: {{ $session->title }}</h1>
                 <p class="text-muted mb-0">Daftar murid yang sudah mengerjakan soal dan nilai yang didapat.</p>
             </div>
             <a href="{{ route('dashboard.individu') }}" class="btn btn-light border">Kembali ke Dashboard</a>
@@ -19,6 +18,10 @@
 
         <div class="card card-soft shadow-sm">
             <div class="card-body p-3 p-md-4">
+                <div class="mb-3">
+                    <input type="text" id="submissionSearchInput" class="form-control" placeholder="Cari murid, kelas, atau nomor absen...">
+                </div>
+
                 @if($session->individualSubmissions->isEmpty())
                     <div class="text-center py-5 text-muted">
                         Belum ada murid yang mengerjakan sesi ini.
@@ -36,9 +39,9 @@
                                     <th class="text-end">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="submissionTableBody">
                                 @foreach($session->individualSubmissions as $submission)
-                                    <tr>
+                                    <tr data-search="{{ strtolower($submission->student_name . ' ' . $submission->class_name . ' ' . $submission->student_number) }}">
                                         <td class="fw-bold">{{ $submission->student_name }}</td>
                                         <td>{{ $submission->class_name }}</td>
                                         <td>{{ $submission->student_number }}</td>
@@ -62,4 +65,24 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const input = document.getElementById('submissionSearchInput');
+            const rows = Array.from(document.querySelectorAll('#submissionTableBody tr'));
+
+            if (!input || !rows.length) {
+                return;
+            }
+
+            input.addEventListener('input', function () {
+                const keyword = this.value.trim().toLowerCase();
+
+                rows.forEach(row => {
+                    const searchable = row.dataset.search || '';
+                    row.style.display = searchable.includes(keyword) ? '' : 'none';
+                });
+            });
+        });
+    </script>
 </x-app-layout>

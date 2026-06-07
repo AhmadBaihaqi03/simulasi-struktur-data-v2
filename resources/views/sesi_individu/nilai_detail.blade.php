@@ -11,7 +11,7 @@
                 <div class="text-uppercase small fw-bold text-muted">Review Jawaban</div>
                 <h1 class="fw-bold mb-1">{{ $submission->student_name }}</h1>
                 <p class="text-muted mb-0">
-                    {{ $submission->individualSession->title }} · Kelas {{ $submission->class_name }} · Absen {{ $submission->student_number }}
+                    sesi: {{ $submission->individualSession->title }} · Kelas {{ $submission->class_name }} · Absen {{ $submission->student_number }}
                 </p>
             </div>
             <div class="d-flex gap-2">

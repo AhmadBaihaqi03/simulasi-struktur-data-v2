@@ -115,7 +115,7 @@
                                    required oninput="this.value = this.value.toUpperCase()">
                         </div>
                         <button type="submit" class="btn-gradient px-6 sm:px-8 py-3.5 text-white rounded-2xl text-xs font-bold flex items-center justify-center gap-2 hover:opacity-95 transition shadow-lg shadow-indigo-200 min-h-[44px]">
-                            Mulai Kuis <span class="text-[10px]">▶</span>
+                            Mulai<span class="text-[10px]">▶</span>
                         </button>
                     </div>
                 </form>

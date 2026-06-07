@@ -7,7 +7,7 @@
     </div>
 
     <h1 class="text-2xl sm:text-3xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight mt-2">
-        {{ $submission->individualSession->title }}
+        Sesi: {{ $submission->individualSession->title }}
     </h1>
 @endsection
 
@@ -25,17 +25,12 @@
                             <div class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Skor Total</div>
                             <div class="text-3xl font-black text-indigo-600">{{ $submission->total_score }}</div>
                         </div>
-                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 text-center">
-                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Percobaan</div>
-                            <div class="text-3xl font-black text-slate-800">#{{ $submission->id }}</div>
-                        </div>
                     </div>
 
                     <div class="mt-6 space-y-2 text-sm text-slate-600">
                         <p><span class="font-bold text-slate-900">Nama:</span> {{ $submission->student_name }}</p>
                         <p><span class="font-bold text-slate-900">Kelas:</span> {{ $submission->class_name }}</p>
                         <p><span class="font-bold text-slate-900">No Absen:</span> {{ $submission->student_number }}</p>
-                        <p><span class="font-bold text-slate-900">Tanggal:</span> {{ $submission->created_at->format('d M Y H:i') }}</p>
                     </div>
 
                     <div class="mt-6 space-y-3">

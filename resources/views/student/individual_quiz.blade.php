@@ -7,7 +7,7 @@
     </div>
 
     <h1 class="text-2xl sm:text-3xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight mt-2">
-        {{ $session->title }}
+        Nama Sesi: {{ $session->title }}
     </h1>
 @endsection
 

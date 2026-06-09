@@ -34,7 +34,6 @@
                                     <th>Murid</th>
                                     <th>Kelas</th>
                                     <th>No. Absen</th>
-                                    <th>Jumlah Jawaban</th>
                                     <th>Nilai</th>
                                     <th class="text-end">Aksi</th>
                                 </tr>
@@ -45,7 +44,6 @@
                                         <td class="fw-bold">{{ $submission->student_name }}</td>
                                         <td>{{ $submission->class_name }}</td>
                                         <td>{{ $submission->student_number }}</td>
-                                        <td>{{ $submission->individual_answers_count }} / {{ $session->individualQuestions->count() }}</td>
                                         <td>
                                             <span class="badge bg-success-subtle text-success badge-score border border-success">
                                                 {{ $submission->total_score }}
